@@ -1,9 +1,10 @@
 import "./ContactItem.css";
+import { memo,useCallback } from "react"; 
 
-export default function ContactItem({id, name, contact, delContact}) {
-  const onSubmit = ()=>{
+function  ContactItem({id, name, contact, delContact})  {
+  const onSubmit = useCallback(()=>{
     delContact(id);
-  }
+  },[delContact, id]);
 
   return (
     <div className="ContactItem">
@@ -13,3 +14,7 @@ export default function ContactItem({id, name, contact, delContact}) {
     </div>
   );
 }
+
+export default memo(ContactItem);
+
+

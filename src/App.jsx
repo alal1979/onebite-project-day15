@@ -1,7 +1,7 @@
 import "./App.css";
 import ContactEditor from "./components/ContactEditor";
 import ContactList from "./components/ContactList";
-import { useState,useRef ,useReducer} from "react"; 
+import { useCallback  ,useRef ,useReducer} from "react"; 
 
 const mokData = [
   {
@@ -39,7 +39,7 @@ function App() {
   const [state, dispatch] = useReducer( reducer ,mokData );
   const addRef = useRef(3);
 
-  const addContact = (info) =>{ 
+  const addContact = useCallback ((info) =>{ 
     console.log("id",info);
     dispatch({
       type : "INCREMENT",
@@ -50,14 +50,14 @@ function App() {
           contact: info.contact
         }  
     })  
-  }
+  },[]);
 
-  const delContact = (targetId) =>{
+  const delContact = useCallback ( (targetId) =>{
     dispatch( {
       type : "DECREMENT",
       targetId : targetId
     })  
-  }
+  } ,[]);
 
 
   return (

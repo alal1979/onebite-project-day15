@@ -1,7 +1,7 @@
 import "./ContactEditor.css";
-import { useState,useRef } from "react"; 
+import { useState,useRef,memo } from "react"; 
 
-export default function ContactEditor({addContact}) {
+ const ContactEditor = ({addContact}) => {
 
   const [info, setInfo] = useState({
     name : "",
@@ -19,12 +19,12 @@ export default function ContactEditor({addContact}) {
   }
 
   const onSubmit = (e) => {  
-    if(nameRef.current.value === ''){
+    if (info.name.trim() === "") {
       nameRef.current.focus();
       return; 
     }
 
-   if(contactRef.current.value === ''){
+   if (info.contact.trim() === "") {
       contactRef.current.focus();
       return;
     } 
@@ -47,3 +47,7 @@ export default function ContactEditor({addContact}) {
     </div>
   );
 }
+
+
+
+export default memo(ContactEditor);
