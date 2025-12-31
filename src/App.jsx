@@ -1,7 +1,7 @@
 import "./App.css";
 import ContactEditor from "./components/ContactEditor";
 import ContactList from "./components/ContactList";
-import { useCallback  ,useRef ,useReducer} from "react"; 
+import { useCallback  ,useRef ,useReducer ,createContext ,useMemo } from "react"; 
 
 const mokData = [
   {
@@ -33,6 +33,8 @@ const reducer = (state, action) => {
 
 }
 
+export const TodoStateContext = createContext();
+export const TodoDispatchContext = createContext();
 
 function App() {
   // const [state, setState] = useState(mokData);
@@ -60,15 +62,28 @@ function App() {
   } ,[]);
 
 
+  // const memoizedDispatch= useMemo( () =>{
+  //   return { addContact,delContact };
+  // } , [] );
+
+    const memoizedDispatch = useMemo(
+    () => ({ addContact, delContact }),
+    []
+  );
+
   return (
     <div className="App">
       <h2>Contact List</h2>
-      <section>
-        <ContactEditor addContact={addContact}/>
-      </section>
-      <section>
-        <ContactList state={state} delContact={delContact}/>
-      </section>
+      <TodoDispatchContext.Provider value={memoizedDispatch}>
+        <TodoStateContext.Provider value={state}>
+        <section>
+          <ContactEditor/>
+        </section>
+        <section>
+          <ContactList />
+        </section>
+        </TodoStateContext.Provider>
+      </TodoDispatchContext.Provider>
     </div>
   );
 }

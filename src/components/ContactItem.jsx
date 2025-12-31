@@ -1,7 +1,10 @@
 import "./ContactItem.css";
-import { memo,useCallback } from "react"; 
+import { memo,useCallback , useContext} from "react"; 
+import { TodoDispatchContext} from '../App'
 
-function  ContactItem({id, name, contact, delContact})  {
+function  ContactItem({id, name, contact })  {
+  const { delContact } = useContext(TodoDispatchContext);
+
   const onSubmit = useCallback(()=>{
     delContact(id);
   },[delContact, id]);

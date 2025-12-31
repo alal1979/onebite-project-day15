@@ -1,8 +1,10 @@
 import "./ContactEditor.css";
-import { useState,useRef,memo } from "react"; 
+import { useState,useRef,memo , useContext} from "react"; 
+import { TodoDispatchContext } from  '../App'
 
- const ContactEditor = ({addContact}) => {
 
+ const ContactEditor = () => {
+  const {addContact} = useContext(TodoDispatchContext);
   const [info, setInfo] = useState({
     name : "",
     contact :""
